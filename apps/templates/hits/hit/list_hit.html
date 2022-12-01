@@ -1,0 +1,62 @@
+{% extends "layouts/base-list.html" %}
+
+{% block title %} Hit {% endblock %}
+
+{% block list_name %} Hits {% endblock %}
+
+{% block list_about %} Hits Upcomming {% endblock %}
+
+{% block list_options %}
+    <a href="{% url 'hit:hit-create' %}"
+       class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        New
+        <i class="feather icon-plus float-end"></i>
+    </a>
+{% endblock %}
+
+{% block list_table %}
+    <div class="table-responsive table-hover">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Target Name</th>
+                <th>Assigned To</th>
+                <th>State</th>
+                <th>Assigned by</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for hit in object_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ hit.target_name }}</td>
+                    <td>
+                        {% if hit.assigned_to == request.user.hitmen %}
+                            <strong>me</strong>
+                        {% else %}
+                            {{ hit.assigned_to }}
+                        {% endif %}
+                    </td>
+                    <td>{{ hit.get_state_display }}</td>
+                    <td>
+                        <p class="text-muted">
+                            {{ hit.assigned_by }}
+                        </p>
+                    </td>
+                    <td>
+                        <a href="{% url 'hit:hit-detail' hit.id %}" class="m-r-10">
+                            <i class="feather icon-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No data.</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

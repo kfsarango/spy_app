@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2>{% block list_name %}{% endblock %}</h2>
+                </div>
+                <div class="col-md-2">
+                    {% block list_options %}{% endblock %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>{% block list_about %}{% endblock %}</h5>
+                        </div>
+                        <div class="card-body table-border-style">
+                            {% block search_box %}
+                                <form action="" method="get" class="form-inline mb-3">
+                                    <div class="form-group">
+                                        {% if search_param %}
+                                            <input type="text" id="search_field" name="search" value="{{ search_param }}"
+                                                   class="form-control">
+                                        {% else %}
+                                            <input type="text" id="search_field" name="search" placeholder="Buscar"
+                                                   class="form-control">
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            {% endblock %}
+                            {% block list_table %}
+                            {% endblock %}
+                        </div>
+                        <!-- Pagination -->
+                        {% if is_paginated %}
+                            <div class="text-center">
+                                <ul class="pagination justify-content-center">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item pagination-prev">
+                                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">&laquo;</span>
+                                        </li>
+                                    {% endif %}
+
+                                    {% for i in paginator.page_range %}
+                                        {% if page_obj.number == i %}
+                                            <li class="page-item active">
+                        <span class="page-link">{{ i }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item pagination-next">
+                                            <a class="page-link"
+                                               href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">&raquo;</span>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    {% block list_extra_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

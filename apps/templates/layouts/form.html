@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} {{ operation }} {% endblock %}
+
+
+{% block content %}
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="custom-form-cont" >
+                        <h3>{{ operation }}</h3>
+                        <hr>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-user">
+                                    Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

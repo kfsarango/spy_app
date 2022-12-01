@@ -1,0 +1,57 @@
+{% extends "layouts/base-detail.html" %}
+
+{% block title %} Hitmen {% endblock %}
+{% block detail_title %}Hitmen{% endblock %}
+
+{% block detail_body %}
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>State</strong>
+        </div>
+        <div class="col-md-6">
+            {% if object.user.is_active %}
+                <span style="background-color: green; border-radius: 5px; color: #fff; padding: 3px"
+                >
+                    Active
+                </span>
+             {% else %}
+                <span style="background-color: #2c3136; border-radius: 5px; color: #fff; padding: 3px"
+                >
+                    Inactive
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>First Name</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.user.first_name }}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>Last Name</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.user.last_name }}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>Correo electrónico</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.user.email }}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>Brief Description</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.description }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layouts/base-list.html" %}
+
+{% block title %} Groups {% endblock %}
+
+{% block list_name %} Groups {% endblock %}
+
+{% block list_about %} My Groups {% endblock %}
+
+{% block list_options %}
+    <a href="{% url 'hit:group-create' %}"
+       class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        New
+        <i class="feather icon-plus float-end"></i>
+    </a>
+{% endblock %}
+
+{% block list_table %}
+    <div class="table-responsive table-hover">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Boss</th>
+                <th>Members</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in object_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ group.name }}</td>
+                    <td>{{ group.boss }}</td>
+                    <td>{{ group.hitmens.all|length }}</td>
+                    <td>
+                        <a href="{% url 'hit:group-detail' group.id %}" class="m-r-10">
+                            <i class="feather icon-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No data.</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar menupos-fixed menu-light ">
+    <div
+            class="navbar-wrapper  ">
+        <div class="navbar-content scroll-div "
+        >
+            <ul class="nav pcoded-inner-navbar ">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Home</label>
+                </li>
+                <li class="nav-item">
+                    <a href="/" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-home"></i>
+                        </span>
+                        <span class="pcoded-mtext">Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'hit:hit-list' %}" class="nav-link ">
+                    <span class="pcoded-micon">
+                        <i class="feather icon-target"></i>
+                    </span>
+                        <span class="pcoded-mtext">Hits</span>
+                    </a>
+                </li>
+
+                {% if user.pk == 1 or user.hitmen.is_boss %}
+                    <li class="nav-item">
+                        <a href="{% url 'hit:hitmen-list' %}" class="nav-link ">
+                    <span class="pcoded-micon">
+                        <i class="feather icon-zap"></i>
+                    </span>
+                            <span class="pcoded-mtext">Hitmens</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if user.pk == 1 %}
+                    <li class="nav-item">
+                        <a href="{% url 'hit:group-list' %}" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                            <span class="pcoded-mtext">Groups</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->
+    

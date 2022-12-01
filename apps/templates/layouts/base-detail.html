@@ -1,0 +1,90 @@
+{% extends "layouts/base.html" %}
+{% load transitions %}
+
+{% block content %}
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <div class="row">
+                {% include 'includes/messages.html' %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-10">
+                                    <h3>
+                                        {% block detail_title %}{% endblock %}
+                                    </h3>
+                                </div>
+                                <div class="col-2">
+                                    {% get_meta_data object as data %}
+                                    {% if object.get_available_state_transitions %}
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">States</button>
+                                            <button type="button"
+                                                    class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="visually-hidden">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                {% for transition in object.get_available_state_transitions %}
+                                                    <li>
+                                                        <a class="dropdown-item apply-transition"
+                                                           href="#"
+                                                           data-url="{% url 'transitions:transition' transition.name data.app_name data.model_name object.pk %}"
+                                                        >
+                                                            {{ transition.custom.verbose }}
+                                                        </a>
+                                                        {% empty %}
+                                                        <a class="dropdown-item"
+                                                           href="#"
+                                                        >
+                                                            Nothing
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            {% block detail_body %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        const changeState = async url => {
+            let response = await fetch(url)
+            return await response.json()
+        }
+
+        const transitions = [...document.getElementsByClassName("apply-transition")]
+
+        transitions.map(transition => {
+            transition.addEventListener("click", e => {
+                e.preventDefault()
+                const check = confirm('Are you sure?');
+                if (check) {
+                    changeState(transition.dataset.url).then(response => {
+                        console.log(response)
+                        if (response.hasOwnProperty("error")) {
+                            throw new Error(response.error)
+                        }
+                        alert(response.message)
+                        window.location.reload();
+                    }).catch(error => {
+                        alert(error)
+                    })
+                }
+            })
+        })
+    </script>
+{% endblock javascripts %}

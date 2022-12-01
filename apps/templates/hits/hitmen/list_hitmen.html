@@ -1,0 +1,42 @@
+{% extends "layouts/base-list.html" %}
+
+{% block title %} Hitmens {% endblock %}
+
+{% block list_name %} Hitmens {% endblock %}
+
+{% block list_about %} My Hitmens {% endblock %}
+
+{% block list_table %}
+    <div class="table-responsive table-hover">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Status</th>
+                <th>Group</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for hitmen in object_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ hitmen.user.get_full_name }}</td>
+                    <td>{{ hitmen.user.is_active|yesno:"On,Off" }}</td>
+                    <td>{{ hitmen.get_group_names }}</td>
+                    <td>
+                        <a href="{% url 'hit:hitmen-detail' hitmen.id %}" class="m-r-10">
+                            <i class="feather icon-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No data.</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

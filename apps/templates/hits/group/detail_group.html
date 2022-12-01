@@ -1,0 +1,39 @@
+{% extends "layouts/base-detail.html" %}
+
+{% block title %} Group {% endblock %}
+{% block detail_title %}Group{% endblock %}
+
+{% block detail_body %}
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>Name</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.name }}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-6 text-end">
+            <strong>Boss</strong>
+        </div>
+        <div class="col-md-6">
+            {{ object.boss }}
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-12">
+            <p>
+                <strong>{{ object }} Members (Hitmens):</strong>
+            </p>
+            {% for hitmen in object.hitmens.all %}
+                <button type="button"
+                        class="btn btn-outline-secondary">
+                    {{ hitmen }} <i class="feather icon-user"></i>
+                </button>
+            {% empty %}
+                <p>No one.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
